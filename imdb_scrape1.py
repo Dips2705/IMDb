@@ -182,10 +182,10 @@ if __name__ == '__main__':
     listOfUrls=[]
     listOfUrls.append(mainUrl)
 
-    # numPages = 1
-    #GETTING THOSE HUNDRED MAIN PAGES
-    # for i in range(2, numPages+1):
-    # 	listOfUrls.append(url+str(i))
+    numPages = 1
+    # GETTING THOSE HUNDRED MAIN PAGES
+    for i in range(1, numPages):
+    	listOfUrls.append(url+str(i))
 
     numCores = 4
 
@@ -203,9 +203,10 @@ if __name__ == '__main__':
                 FinalList.append(k)
 
     print(FinalList)
-
+    print(len(FinalList))
     parProcesses = [Pool(numCores), Pool(numCores), Pool(numCores), Pool(numCores)]
-    numMovies = 9941
+    # numMovies = 4
+    numMovies = len(FinalList)
     for i in range(0, 4):
         # parProcess2 = Pool(numCores)
         result2 = parProcesses[i].map(scrapeData, FinalList[(numMovies*i)//4:(numMovies*(i+1))//4])
@@ -214,8 +215,8 @@ if __name__ == '__main__':
             movieName = finalDict[movie[0]][0]
             movieRating = finalDict[movie[0]][1]
             # print(movieName)
-            print("C:\\Users\\Ritwik\\Documents\\"+movieName.replace(' ', '_').replace('"', '_').replace('/', '_')+"_"+str(movieRating)+".tsv")
-            with io.open("C:\\Users\\Ritwik\\Documents\\"+movieName.replace(' ', '_').replace('"', '_').replace('/', '_')+"_"+str(movieRating)+".tsv", "w", encoding="utf-8") as outfile:
+            print("C:\\Users\\Ritwik\\Documents\\Scraping\\"+movieName.replace(' ', '_').replace('"', '_').replace('/', '_')+"_"+str(movieRating)+".tsv")
+            with io.open("C:\\Users\\Ritwik\\Documents\\Scraping\\"+movieName.replace(' ', '_').replace('"', '_').replace('/', '_')+"_"+str(movieRating)+".tsv", "w", encoding="utf-8") as outfile:
             # outfile = open("C:/data/"+movieName.replace(' ', '_').replace('"', '_').replace('/', '_')+"_"+str(movieRating)+".tsv", "w")
                 writer = csv.writer(outfile, delimiter='\t', lineterminator='\n')
                 writer.writerow(['Comment Head','Comment Body', 'Comment Rating'])
